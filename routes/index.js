@@ -39,21 +39,20 @@ router.post('/upload-image', function(req, res) {
     cmds.push(base_dir+'build/examples/cpp_classification/classification.bin ' + base_dir+'models/bvlc_reference_caffenet/deploy.prototxt ' + base_dir+'models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel ' + base_dir+'data/ilsvrc12/imagenet_mean.binaryproto ' + base_dir+'data/ilsvrc12/synset_words.txt ' + target_name);
     cmds.push(base_dir+'build/examples/cpp_classification/classification.bin ' + base_dir+'models/bvlc_reference_caffenet/deploy.prototxt ' + base_dir+'models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel ' + base_dir+'data/ilsvrc12/imagenet_mean.binaryproto ' + base_dir+'data/ilsvrc12/synset_words.txt ' + target_name);
     cmds.push(base_dir+'build/examples/cpp_classification/classification.bin ' + base_dir+'models/bvlc_reference_caffenet/deploy.prototxt ' + base_dir+'models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel ' + base_dir+'data/ilsvrc12/imagenet_mean.binaryproto ' + base_dir+'data/ilsvrc12/synset_words.txt ' + target_name);
-    var times = new Array();
-    var sims = new Array();
-    var labels = new Array();
-    var outputs = new Array();
+    var times = new Array(3);
+    var sims = new Array(3);
+    var labels = new Array(3);
+    var outputs = new Array(3);
     for (idx in cmds)
     {
       var cmd = cmds[idx];
       shell.exec("time "+cmd, {silent:true}, function(code, output) {
         //console.log('processing...'+cmd);
-        //image_path should be set to /images/[name of uploaded picture] in order to show the picture uploaded, here I use the picture's rgb tunnel red produced by pic.py
         //the rest of variables all depend on the form of output of caffe
         var lines = output.split("\n");
         var time = lines[6].split(" ")[1];
         time = time.slice(0,time.length-6);
-        times.push(time);
+        times[idx] = time;
         lines = lines.slice(1,6);
         var sim = new Array();
         var label = new Array();
@@ -65,12 +64,14 @@ router.post('/upload-image', function(req, res) {
         }
         //console.log(output);
         //this part also requires configuration after we decide the form of output
-        sims.push(sim);
-        labels.push(label);
-        outputs.push(output);
+        sims[idx] = sim;
+        labels[idx] = label;
+        outputs[idx] = output;
       });
     }
     console.log(labels);
+    console.log(sims);
+    console.log(image_path);
     res.render('caffe-demo.html',{image_path:image_path,num:sims,tag:labels,seconds:times,output:outputs});
   });
 });
