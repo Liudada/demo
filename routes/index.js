@@ -67,7 +67,7 @@ router.post('/upload-image', function(req, res) {
         //this part also requires configuration after we decide the form of output
         sims.push(sim);
         labels.push(label);
-        console.log(labels[0]);
+        console.log(labels[labels.length-1]);
         outputs.push(output);
       });
     }
