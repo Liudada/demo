@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>基于RPU集群的Adaboost加速算法实现项目演示</title>
+
+    <!-- Bootstrap -->
+    <link href="stylesheets/bootstrap.min.css" rel="stylesheet">
+    <link href="stylesheets/style.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class='container'>
+      <div class='head'>
+        <a href='#'></a>
+        <p>基于RPU集群的Adaboost加速算法实现项目演示</p>
+      </div>
+      <ul class="nav nav-tabs nav-justified" role="tablist">
+        <li role="presentation" class="active"><a href="#">项目简介</a></li>
+        <li role="presentation"><a href="#">项目演示</a></li>
+        <li role="presentation"><a href="#">源代码查看</a></li>
+        <li role="presentation"><a href="#">其他</a></li>
+      </ul>
+      <ul class='pictures'>
+        <li><img src="images/1.jpg"></li>
+        <li><img src="images/2.jpg"></li>
+        <li><img src="images/3.jpg"></li>
+        <li><img src="images/4.jpg"></li>
+        <li><img src="images/5.jpg"></li>
+        <li><img src="images/6.jpg"></li>
+        <li><img src="images/7.jpg"></li>
+        <li><img src="images/8.jpg"></li>
+        <li><img src="images/9.jpg"></li>
+        <li><img src="images/10.jpg"></li>
+        <li><img src="images/11.jpg"></li>
+        <li><img src="images/12.jpg"></li>
+        <li><img src="images/13.jpg"></li>
+        <li><img src="images/14.jpg"></li>
+        <li><img src="images/15.jpg"></li>
+        <li><img src="images/16.jpg"></li>
+        <li><img src="images/17.jpg"></li>
+        <li><img src="images/18.jpg"></li>
+        <li><img src="images/19.jpg"></li>
+        <li><img src="images/20.jpg"></li>
+      </ul>
+      <div class='upload'>
+        <div class='load_left'>
+          <ul>
+            <li><span>图像比对</span></li>
+            <li><span>算法原理介绍</span></li>
+            <li><span>其他</span></li>
+            <!-- <li><a href=''><span>其他</span></a></li> -->
+          </ul>
+        </div>
+        <div class='load_mid' id='load_mid' style="background-image: url('<%= il%>');"></div>
+        <div class='load_right'>
+          <div class="file-box"> 
+            <form action="/upload" method="post" enctype="multipart/form-data">
+              <div class="checkbox">
+                <label class='single'>
+                  <input type=radio name="type" id="type" value="s" />
+                  单机计算
+                </label>
+                <label class='cluster'>
+                  <input type=radio name="type" id="type" value="c" />
+                  集群加速
+                </label>
+              </div>              
+              <input type='text' name='textfield' id='textfield' class='txt' /> 
+              <input type='button' class='choose' value='浏览...' /> 
+              <input type="file" name="fileField" class="file" id="fileField" size="28"  /> 
+              <input id='submit' type="submit" name="submit" class="btn" value="上传" />               
+            </form> 
+          </div>          
+          <div>
+              <p>搜索用时：<span class='search_time'><%= dt %></span></p>
+              <!--<p>结果数：<span class='result_num'>3</span></p>  -->
+          </div>
+        </div>
+      </div>
+      <div class='similar_pic'>
+        <div class='similar_left'>
+          <p class='title'>使用方式</p>
+          <p>选择示例图片、粘贴图片URL、或者上传本地图片进行人脸检测。将鼠标移至人脸框，还可以查看更多信息。使用Chrome浏览器还可以现场拍照测试哦~</p>
+        </div>
+        <div class='similar_mid' id='similar_mid' style="background-image: url('<%= ol%>');"></div>
+        <div class='similar_right'>
+          <img src='' />
+          <img src='' />
+          <img src='' />
+          <img src='' />
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="javascripts/jquery-2.1.1.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="javascripts/bootstrap.min.js"></script>
+    <script src="javascripts/main.js"></script>
+  </body>
+</html>

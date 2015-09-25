@@ -1,0 +1,203 @@
+.container{
+    height: 700px;
+    width: 1180px;
+    padding: 0;
+}  
+
+.head {
+	height: 107px;
+}
+
+.head a{
+	width: 189px;
+	background: url('../images/logo.png') no-repeat;
+	display: block;
+	float: left;
+	margin: 10px 0;
+	margin-left: 40px;
+	height: 86px;
+	text-indent: -9999px;
+	direction: ltr;
+	overflow: hidden;
+}
+
+.head p{
+	font-size: 40px;
+	float: right;
+	margin:25px auto;
+}
+
+.pictures{
+	list-style: none;
+	height: 236px;
+	padding: 0;
+}
+
+.pictures li{
+	float: left;
+	width: 118px;
+	height: 118px;
+	overflow: hidden;
+}
+
+.pictures li img{
+	opacity: .5;
+}
+
+.pictures li img:hover{
+	opacity: 1;
+}
+
+.upload{
+	position:relative;
+	height: 300px;
+	margin-bottom: 10px;
+}
+
+.load_left{
+	height: 300px;
+	width: 200px;
+	position: absolute;
+	top:0;
+	left: 0;
+	font-size: 20px;
+}
+
+.load_left ul{
+	margin-top: 20px;
+	list-style: none;
+}
+
+.load_left ul li{
+	border-bottom: 1px solid #ccc;
+	padding: 5px 10px;
+	text-overflow: ellipsis;
+}
+
+.load_left ul li:hover{
+	color: #00b4ff;
+}
+
+.load_mid{
+	height: 300px;
+	width: 400px;
+	position: absolute;
+	top:0;
+	left: 210px;
+	background-color: #f0f0f0;
+	margin-left: 10px;
+	background-repeat: no-repeat;
+	background-size:contain;
+	background-origin:content;
+	background-position:50% 50%; 
+}
+
+.load_right{
+	height: 300px;
+	width: 540px;
+	position: absolute;
+	top:0;
+	left: 640px;
+	padding:0 100px 0 100px;
+}
+
+input{
+	vertical-align: middle;
+	margin: 0;
+	padding: 0;
+}
+
+.file-box{ 
+	position:relative;
+	width:340px;
+	margin: 10px auto;
+
+} 
+.txt{ 
+	height:22px; 
+	border:1px solid #cdcdcd; 
+	width:180px;
+} 
+.choose{ 
+	background-color:#FFF; 
+	border:1px solid #CDCDCD;
+	height:24px; 
+	width:70px;
+	margin: 0;
+	padding: 0;
+} 
+.file{ 
+	position:absolute; 
+	top:0; 
+	right:80px; 
+	height:24px; 
+	filter:alpha(opacity:0);
+	opacity: 0;
+	width:260px 
+}
+
+.file-box div{
+	margin-top: 20px;
+	margin-bottom: 20px;
+	height:45px;
+}
+
+.file-box div .btn_single{
+	float: left;
+}
+
+.file-box div .btn_cluster{
+	float: right;
+}
+
+.load_right p{
+	font-size: 30px;
+	margin: 30px 0;
+}
+
+.similar_pic{
+	position:relative;
+}
+
+.similar_left{
+	height: 300px;
+	width: 200px;
+	position: absolute;
+	top:0;
+	left: 0;
+	padding: 10px;
+	font:300 14px/1.5 Roboto,"Segoe UI","Helvetica Neue",Helvetica,"Microsoft YaHei","微软雅黑",SimHei,"黑体",sans-serif;
+}
+
+.similar_left .title{
+	color: #00b4ff;
+}
+
+.similar_mid{
+	height: 300px;
+	width: 400px;
+	position: absolute;
+	top:0;
+	left: 210px;
+	background-color: #f0f0f0;
+	margin-left: 10px;
+	background-repeat: no-repeat;
+	background-size:contain;
+	background-origin:content;
+	background-position:50% 50%; 
+}
+
+.similar_right{
+	height: 300px;
+	width:540px;
+	position: absolute;
+	top:0;
+	left: 640px;
+}
+
+.similar_right img{
+	width:138px;
+	height: 140px;
+	margin: 5px 65px 5px 65px;
+	background-color: #f0f0f0;
+}

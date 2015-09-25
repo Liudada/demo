@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Demos for Caffe</title>
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+
+        <script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(
+                function () {
+                    $('#imagefile').change(
+                        function () {
+                            if ($(this).val()) {
+                                $('#formupload').submit();
+                            }
+                    });
+            });
+        </script>
+    </head>
+
+    <body>
+        <div class="container">
+
+            <div class="row">
+                <h1><center><a href="/">Demos for Caffe</a></center></h1>
+            </div>
+
+            <hr/>
+
+            <div class="row"><h2>Classification</h2></div>
+
+            <hr/>
+
+            <div class="row"><a href="/quick-example">Click for a quick example</a></div>
+
+            <br/>
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <img src="<%= image_path%>" style="width:100%;">
+                </div>
+                <div class="col-sm-8">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#infopred" data-toggle="tab">Maximally accurate</a></li>
+                        <li><a href="#flatpred" data-toggle="tab">Maximally specific</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="infopred">
+                            <ul class="list-group">
+                            <% for (var i=0;i<tag.length;i++) {%>
+                                <li class="list-group-item">
+                                    <span class="badge"><%= num[i]%></span>
+                                    <h4 class="list-group-item-heading"><a href="https://www.google.com/#q=<%= tag[i]%>" target="_blank"><%= tag[i]%></a></h4>
+                                </li>
+                            <% } %>
+                            </ul>
+                        </div>
+                        <div class="tab-pane fade" id="flatpred">
+                            <ul class="list-group">
+                            <% for (var i=0;i<tag.length;i++) {%>
+                                <li class="list-group-item">
+                                    <span class="badge"><%= num[i]%></span>
+                                    <h4 class="list-group-item-heading"><a href="https://www.google.com/#q=<%= tag[i]%>" target="_blank"><%= tag[i]%></a></h4>
+                                </li>
+                            <% } %>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row"><p>Time Consume: <%= seconds%> seconds.</p></div>
+            <hr/>
+
+            <div class="row"><p>Commandline Output: <%= output%></p></div>
+            <hr/>
+
+            <div class="row">
+                <form id="formupload" action="/upload-image" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="imagefile">Upload an image:</label>
+                        <input type="file" id="imagefile" name="imagefile" value="test">
+                    </div>
+                </form>
+            </div>
+
+            <hr/>
+        </div>
+    </body>
+
+</html>
