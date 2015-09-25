@@ -7,6 +7,10 @@ var shell = require('shelljs');
 var util = require('util');
 var commond = '"D:/C projects/opencvface/release/opencvface" --cascade="D:/C projects/opencvface/haarcascades/haarcascade_frontalface_alt.xml" --nested-cascade="D:/C projects/opencvface/haarcascades/haarcascade_eye.xml" --scale=1.25 --i="D:/C projects/opencvface/test2.jpg" --o="E:/node/picture/public/images/result2.jpg"';
 var base_dir = "/home/aj/Projects/caffe/"
+var times = new Array(3);
+var sims = new Array(3);
+var labels = new Array(3);
+var outputs = new Array(3);
 
 
 /* GET home page. */
@@ -39,10 +43,6 @@ router.post('/upload-image', function(req, res) {
     cmds.push(base_dir+'build/examples/cpp_classification/classification.bin ' + base_dir+'models/bvlc_reference_caffenet/deploy.prototxt ' + base_dir+'models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel ' + base_dir+'data/ilsvrc12/imagenet_mean.binaryproto ' + base_dir+'data/ilsvrc12/synset_words.txt ' + target_name);
     cmds.push(base_dir+'build/examples/cpp_classification/classification.bin ' + base_dir+'models/bvlc_reference_caffenet/deploy.prototxt ' + base_dir+'models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel ' + base_dir+'data/ilsvrc12/imagenet_mean.binaryproto ' + base_dir+'data/ilsvrc12/synset_words.txt ' + target_name);
     cmds.push(base_dir+'build/examples/cpp_classification/classification.bin ' + base_dir+'models/bvlc_reference_caffenet/deploy.prototxt ' + base_dir+'models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel ' + base_dir+'data/ilsvrc12/imagenet_mean.binaryproto ' + base_dir+'data/ilsvrc12/synset_words.txt ' + target_name);
-    var times = new Array(3);
-    var sims = new Array(3);
-    var labels = new Array(3);
-    var outputs = new Array(3);
     for (idx in cmds)
     {
       var cmd = cmds[idx];
