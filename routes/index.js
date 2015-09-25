@@ -7,10 +7,6 @@ var shell = require('shelljs');
 var util = require('util');
 var commond = '"D:/C projects/opencvface/release/opencvface" --cascade="D:/C projects/opencvface/haarcascades/haarcascade_frontalface_alt.xml" --nested-cascade="D:/C projects/opencvface/haarcascades/haarcascade_eye.xml" --scale=1.25 --i="D:/C projects/opencvface/test2.jpg" --o="E:/node/picture/public/images/result2.jpg"';
 var base_dir = "/home/aj/Projects/caffe/"
-var times = new Array(3);
-var sims = new Array(3);
-var labels = new Array(3);
-var outputs = new Array(3);
 
 
 /* GET home page. */
@@ -43,6 +39,11 @@ router.post('/upload-image', function(req, res) {
     cmds.push(base_dir+'build/examples/cpp_classification/classification.bin ' + base_dir+'models/bvlc_reference_caffenet/deploy.prototxt ' + base_dir+'models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel ' + base_dir+'data/ilsvrc12/imagenet_mean.binaryproto ' + base_dir+'data/ilsvrc12/synset_words.txt ' + target_name);
     cmds.push(base_dir+'build/examples/cpp_classification/classification.bin ' + base_dir+'models/bvlc_reference_caffenet/deploy.prototxt ' + base_dir+'models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel ' + base_dir+'data/ilsvrc12/imagenet_mean.binaryproto ' + base_dir+'data/ilsvrc12/synset_words.txt ' + target_name);
     cmds.push(base_dir+'build/examples/cpp_classification/classification.bin ' + base_dir+'models/bvlc_reference_caffenet/deploy.prototxt ' + base_dir+'models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel ' + base_dir+'data/ilsvrc12/imagenet_mean.binaryproto ' + base_dir+'data/ilsvrc12/synset_words.txt ' + target_name);
+    var vars;
+    vars.times = new Array(3);
+    vars.sims = new Array(3);
+    vars.labels = new Array(3);
+    vars.outputs = new Array(3);
     for (idx in cmds)
     {
       var cmd = cmds[idx];
@@ -52,7 +53,7 @@ router.post('/upload-image', function(req, res) {
         var lines = output.split("\n");
         var time = lines[6].split(" ")[1];
         time = time.slice(0,time.length-6);
-        times[idx] = time;
+        vars.times[idx] = time;
         lines = lines.slice(1,6);
         var sim = new Array();
         var label = new Array();
@@ -64,15 +65,14 @@ router.post('/upload-image', function(req, res) {
         }
         //console.log(output);
         //this part also requires configuration after we decide the form of output
-        sims[idx] = sim;
-        labels[idx] = label;
-        outputs[idx] = output;
+        vars.sims[idx] = sim;
+        vars.labels[idx] = label;
+        vars.outputs[idx] = output;
       });
     }
-    console.log(labels);
-    console.log(sims);
-    console.log(image_path);
-    res.render('caffe-demo.html',{image_path:image_path,num:sims,tag:labels,seconds:times,output:outputs});
+    console.log(vars.labels);
+    console.log(vars.sims);
+    res.render('caffe-demo.html',{image_path:image_path,num:vars.sims,tag:vars.labels,seconds:vars.times,output:vars.outputs});
   });
 });
 
