@@ -46,7 +46,7 @@ router.post('/upload-image', function(req, res) {
     for (cmd in cmds)
     {
       shell.exec("time "+cmd, {silent:true}, function(code, output) {
-        console.log('processing...cmd');
+        console.log('processing...'+cmd);
         //image_path should be set to /images/[name of uploaded picture] in order to show the picture uploaded, here I use the picture's rgb tunnel red produced by pic.py
         //the rest of variables all depend on the form of output of caffe
         var lines = output.split("\n");
