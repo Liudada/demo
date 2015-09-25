@@ -43,39 +43,37 @@ router.post('/upload-image', function(req, res) {
     sims = [];
     labels = [];
     outputs = [];
-    function run (output) {
-      var lines = output.split("\n");
-      var time = lines[6].split(" ")[1];
-      time = time.slice(0,time.length-6);
-      times.push(time)
-      lines = lines.slice(1,6);
-      var sim = new Array();
-      var label = new Array();
-      for (i in lines)
-      {
-        parts = lines[i].split(" - ");
-        sim.push(parts[0]);
-        label.push(parts[1].slice(1,parts[1].length-1).split(" ").slice(1).join(" "));
-      }
-      console.log(output);
-      //this part also requires configuration after we decide the form of output
-      sims.push(sim);
-      labels.push(label);
-      outputs.push(output);
-    }
-    shell.exec("time "+cmds[0], {silent:true}, function(code, output) {
-      console.log('processing...'+cmds[0]);
-      run(output);
-      shell.exec("time "+cmds[1], {silent:true}, function(code, output) {
-        console.log('processing...'+cmds[1]);
-        run(output);
-        shell.exec("time "+cmds[2], {silent:true}, function(code, output) {
-          console.log('processing...'+cmds[2]);
-          run(output);
+    for (idx in cmds)
+    {
+      var cmd = cmds[idx];
+      shell.exec("time "+cmd, {silent:true}, function(code, output) {
+        console.log('processing...'+cmd);
+        //the rest of variables all depend on the form of output of caffe
+        var lines = output.split("\n");
+        var time = lines[6].split(" ")[1];
+        time = time.slice(0,time.length-6);
+        times.push(time)
+        lines = lines.slice(1,6);
+        var sim = new Array();
+        var label = new Array();
+        for (i in lines)
+        {
+          parts = lines[i].split(" - ");
+          sim.push(parts[0]);
+          label.push(parts[1].slice(1,parts[1].length-1).split(" ").slice(1).join(" "));
+        }
+        console.log(output);
+        //this part also requires configuration after we decide the form of output
+        sims.push(sim);
+        labels.push(label);
+        outputs.push(output);
+        if (idx==cmds.length-1) {
+          console.log(labels);
           res.render('caffe-demo.html',{image_path:image_path,num:sims,tag:labels,seconds:times,output:outputs});
-        });
+          return;
+        }
       });
-    });
+    }
   });
 });
 
