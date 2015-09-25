@@ -70,6 +70,7 @@ router.post('/upload-image', function(req, res) {
         if (idx==cmds.length-1) {
           console.log(labels);
           res.render('caffe-demo.html',{image_path:image_path,num:sims,tag:labels,seconds:times,output:outputs});
+          return;
         }
       });
     }
