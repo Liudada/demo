@@ -39,11 +39,10 @@ router.post('/upload-image', function(req, res) {
     cmds.push(base_dir+'build/examples/cpp_classification/classification.bin ' + base_dir+'models/bvlc_reference_caffenet/deploy.prototxt ' + base_dir+'models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel ' + base_dir+'data/ilsvrc12/imagenet_mean.binaryproto ' + base_dir+'data/ilsvrc12/synset_words.txt ' + target_name);
     cmds.push(base_dir+'build/examples/cpp_classification/classification.bin ' + base_dir+'models/bvlc_reference_caffenet/deploy.prototxt ' + base_dir+'models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel ' + base_dir+'data/ilsvrc12/imagenet_mean.binaryproto ' + base_dir+'data/ilsvrc12/synset_words.txt ' + target_name);
     cmds.push(base_dir+'build/examples/cpp_classification/classification.bin ' + base_dir+'models/bvlc_reference_caffenet/deploy.prototxt ' + base_dir+'models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel ' + base_dir+'data/ilsvrc12/imagenet_mean.binaryproto ' + base_dir+'data/ilsvrc12/synset_words.txt ' + target_name);
-    var vars;
-    vars.times = new Array(3);
-    vars.sims = new Array(3);
-    vars.labels = new Array(3);
-    vars.outputs = new Array(3);
+    var times = [];
+    var sims = [];
+    var labels = [];
+    var outputs = [];
     for (idx in cmds)
     {
       var cmd = cmds[idx];
@@ -53,7 +52,7 @@ router.post('/upload-image', function(req, res) {
         var lines = output.split("\n");
         var time = lines[6].split(" ")[1];
         time = time.slice(0,time.length-6);
-        vars.times[idx] = time;
+        times.push(time)
         lines = lines.slice(1,6);
         var sim = new Array();
         var label = new Array();
@@ -65,14 +64,14 @@ router.post('/upload-image', function(req, res) {
         }
         //console.log(output);
         //this part also requires configuration after we decide the form of output
-        vars.sims[idx] = sim;
-        vars.labels[idx] = label;
-        vars.outputs[idx] = output;
+        sims.push(sim);
+        labels.push(label);
+        outputs.push(output);
       });
     }
-    console.log(vars.labels);
-    console.log(vars.sims);
-    res.render('caffe-demo.html',{image_path:image_path,num:vars.sims,tag:vars.labels,seconds:vars.times,output:vars.outputs});
+    console.log(labels);
+    console.log(sims);
+    res.render('caffe-demo.html',{image_path:image_path,num:sims,tag:labels,seconds:times,output:outputs});
   });
 });
 
