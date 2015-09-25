@@ -47,7 +47,7 @@ router.post('/upload-image', function(req, res) {
     {
       var cmd = cmds[idx];
       shell.exec("time "+cmd, {silent:true}, function(code, output) {
-        console.log('processing...'+cmd);
+        //console.log('processing...'+cmd);
         //image_path should be set to /images/[name of uploaded picture] in order to show the picture uploaded, here I use the picture's rgb tunnel red produced by pic.py
         //the rest of variables all depend on the form of output of caffe
         var lines = output.split("\n");
@@ -63,10 +63,11 @@ router.post('/upload-image', function(req, res) {
           sim.push(parts[0]);
           label.push(parts[1].slice(1,parts[1].length-1).split(" ").slice(1).join(" "));
         }
-        console.log(output);
+        //console.log(output);
         //this part also requires configuration after we decide the form of output
         sims.push(sim);
         labels.push(label);
+        console.log(labels[0]);
         outputs.push(output);
       });
     }
