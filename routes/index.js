@@ -67,10 +67,10 @@ router.post('/upload-image', function(req, res) {
         //this part also requires configuration after we decide the form of output
         sims.push(sim);
         labels.push(label);
-        console.log(labels[labels.length-1]);
         outputs.push(output);
       });
     }
+    console.log(labels);
     res.render('caffe-demo.html',{image_path:image_path,num:sims,tag:labels,seconds:times,output:outputs});
   });
 });
