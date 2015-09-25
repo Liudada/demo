@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var formidable = require('formidable'),
-	  util = require('util'),
+    util = require('util'),
     fs = require('fs');
 var shell = require('shelljs');
 var util = require('util');
@@ -83,21 +83,18 @@ router.post('/upload', function(req, res){
   var form = new formidable.IncomingForm();
   form.uploadDir = "./public/images";
   form.parse(req, function(err, fields, files) {
-  //重命名
-  var target_name = ".\\public\\images\\"+files.fileField.name;
-  console.log('target_name:'+target_name);
-  fs.renameSync(files.fileField.path, target_name);
-  shell.exec(commond, {silent:true}, function(code, output){
-	console.log('123');
-	var dt = output.replace('Face_detection_processing...,','').split(',')[0].split('=')[1];
-	var ol = output.replace('Face_detection_processing...,','').split(',')[1].split('=')[1];
-	console.log(output);
-	res.render('index.html', {dt:dt,ol:"images/result1.jpg",il:target_name});
-	
-	});
-  
+    //重命名
+    var target_name = ".\\public\\images\\"+files.fileField.name;
+    console.log('target_name:'+target_name);
+    fs.renameSync(files.fileField.path, target_name);
+    shell.exec(commond, {silent:true}, function(code, output){
+      console.log('123');
+      var dt = output.replace('Face_detection_processing...,','').split(',')[0].split('=')[1];
+      var ol = output.replace('Face_detection_processing...,','').split(',')[1].split('=')[1];
+      console.log(output);
+      res.render('index.html', {dt:dt,ol:"images/result1.jpg",il:target_name});
+    });
   });
-
   return;
 });
 
