@@ -47,7 +47,7 @@ router.post('/upload-image', function(req, res) {
     {
       var cmd = cmds[idx];
       shell.exec("time "+cmd, {silent:true}, function(code, output) {
-        //console.log('processing...'+cmd);
+        console.log('processing...'+cmd);
         //the rest of variables all depend on the form of output of caffe
         var lines = output.split("\n");
         var time = lines[6].split(" ")[1];
@@ -62,13 +62,13 @@ router.post('/upload-image', function(req, res) {
           sim.push(parts[0]);
           label.push(parts[1].slice(1,parts[1].length-1).split(" ").slice(1).join(" "));
         }
-        //console.log(output);
+        console.log(output);
         //this part also requires configuration after we decide the form of output
         sims.push(sim);
         labels.push(label);
         outputs.push(output);
         if (idx==cmds.length-1) {
-          res.render('caffe-demo.html',{image_path:image_path,num:vars.sims,tag:vars.labels,seconds:vars.times,output:vars.outputs});
+          res.render('caffe-demo.html',{image_path:image_path,num:sims,tag:labels,seconds:times,output:outputs});
         }
       });
     }
