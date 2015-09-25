@@ -33,7 +33,7 @@
 
             <hr/>
 
-            <div class="row"><a href="/quick-example">Click for a quick example</a></div>
+            <!--div class="row"><a href="/quick-example">Click for a quick example</a></div-->
 
             <br/>
 
@@ -43,38 +43,47 @@
                 </div>
                 <div class="col-sm-8">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#infopred" data-toggle="tab">Maximally accurate</a></li>
-                        <li><a href="#flatpred" data-toggle="tab">Maximally specific</a></li>
+                        <li class="active"><a href="#type1" data-toggle="tab">Type01</a></li>
+                        <% for (var i=2;i<=tag.length;i++) {%>
+                        <li><a href="#type<%= i%>" data-toggle="tab">Type0<%= i%></a></li>
+                        <% } %>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane fade in active" id="infopred">
+                        <div class="tab-pane fade in active" id="type1">
                             <ul class="list-group">
-                            <% for (var i=0;i<tag.length;i++) {%>
+                            <% for (var i=0;i<tag[0].length;i++) {%>
                                 <li class="list-group-item">
-                                    <span class="badge"><%= num[i]%></span>
-                                    <h4 class="list-group-item-heading"><a href="https://www.google.com/#q=<%= tag[i]%>" target="_blank"><%= tag[i]%></a></h4>
+                                    <span class="badge"><%= num[0][i]%></span>
+                                    <h4 class="list-group-item-heading"><a href="https://www.google.com/#q=<%= tag[0][i]%>" target="_blank"><%= tag[0][i]%></a></h4>
                                 </li>
                             <% } %>
                             </ul>
                         </div>
-                        <div class="tab-pane fade" id="flatpred">
+                        <% for (var type=2;type<=tag.length;type++) {%>
+                        <div class="tab-pane fade" id="type<%= type%>">
                             <ul class="list-group">
-                            <% for (var i=0;i<tag.length;i++) {%>
+                            <% for (var i=0;i<tag[type-1].length;i++) {%>
                                 <li class="list-group-item">
-                                    <span class="badge"><%= num[i]%></span>
-                                    <h4 class="list-group-item-heading"><a href="https://www.google.com/#q=<%= tag[i]%>" target="_blank"><%= tag[i]%></a></h4>
+                                    <span class="badge"><%= num[type-1][i]%></span>
+                                    <h4 class="list-group-item-heading"><a href="https://www.google.com/#q=<%= tag[type-1][i]%>" target="_blank"><%= tag[type-1][i]%></a></h4>
                                 </li>
                             <% } %>
                             </ul>
                         </div>
+                        <% } %>
                     </div>
                 </div>
             </div>
 
-            <div class="row"><p>Time Consume: <%= seconds%> seconds.</p></div>
+            <% for (var i=0;i<seconds.length;i++) {%>
+            <div class="row"><p>Time Consume: <%= seconds[i]%> seconds.</p></div>
+            <% } %>
+
             <hr/>
 
+            <% for (var i=0;i<output.length;i++) {%>
             <div class="row"><p>Commandline Output: <%= output%></p></div>
+            <% } %>
             <hr/>
 
             <div class="row">

@@ -22,7 +22,7 @@ router.get('/', function(req, res) {
 router.get('/caffe-demo', function(req, res) {
   //index page for caffe demo
   //for testing I render some arguments in {}, they can be set to '' to leave blank
-  res.render('caffe-demo.html', {image_path:"/images/19.jpg",num:[1,2,3,4],tag:['none','none','none','none'],seconds:0,output:''});
+  res.render('caffe-demo.html', {image_path:"/images/19.jpg",num:[[1,2,3,4]],tag:[['none','none','none','none']],seconds:[0],output:['']});
 });
 
 router.post('/upload-image', function(req, res) {
@@ -30,29 +30,46 @@ router.post('/upload-image', function(req, res) {
   form.uploadDir = "./public/images";
   form.parse(req, function(err, fields, files) {
     var target_name = "./public/images/" + files.imagefile.name;
+    var image_path = "/images/" + files.imagefile.name;
     console.log('target_name: ' + target_name);
     fs.renameSync(files.imagefile.path, target_name);
     console.log(target_name);
     //variable cmd should be set to the absolute path of caffe exe file(with additional parameters) + target_name
-    var cmd = base_dir+'build/examples/cpp_classification/classification.bin ' + base_dir+'models/bvlc_reference_caffenet/deploy.prototxt ' + base_dir+'models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel ' + base_dir+'data/ilsvrc12/imagenet_mean.binaryproto ' + base_dir+'data/ilsvrc12/synset_words.txt ' + target_name;
-    shell.exec(cmd, {silent:true}, function(code, output) {
-      console.log('processing...');
-      //image_path should be set to /images/[name of uploaded picture] in order to show the picture uploaded, here I use the picture's rgb tunnel red produced by pic.py
-      var image_path = "/images/red.jpg";
-      //the rest of variables all depend on the form of output of caffe
-      var lines = output.split("\n").slice(1);
-      var sims = new Array();
-      var labels = new Array();
-      for (line in lines)
-      {
-        parts = line.split(" - ");
-        sims.push(parts[0]);
-        labels.push(parts[1]);
-      }
-      console.log(output);
-      //this part also requires configuration after we decide the form of output
-      res.render('caffe-demo.html',{image_path:image_path,num:sims,tag:labels,seconds:"unknown",output:output});
-    });
+    var cmds = new Array();
+    cmds.push(base_dir+'build/examples/cpp_classification/classification.bin ' + base_dir+'models/bvlc_reference_caffenet/deploy.prototxt ' + base_dir+'models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel ' + base_dir+'data/ilsvrc12/imagenet_mean.binaryproto ' + base_dir+'data/ilsvrc12/synset_words.txt ' + target_name);
+    cmds.push(base_dir+'build/examples/cpp_classification/classification.bin ' + base_dir+'models/bvlc_reference_caffenet/deploy.prototxt ' + base_dir+'models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel ' + base_dir+'data/ilsvrc12/imagenet_mean.binaryproto ' + base_dir+'data/ilsvrc12/synset_words.txt ' + target_name);
+    cmds.push(base_dir+'build/examples/cpp_classification/classification.bin ' + base_dir+'models/bvlc_reference_caffenet/deploy.prototxt ' + base_dir+'models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel ' + base_dir+'data/ilsvrc12/imagenet_mean.binaryproto ' + base_dir+'data/ilsvrc12/synset_words.txt ' + target_name);
+    times = new Array();
+    sims = new Array();
+    labels = new Array();
+    outputs = new Array();
+    for (cmd in cmds)
+    {
+      shell.exec("time "+cmd, {silent:true}, function(code, output) {
+        console.log('processing...cmd');
+        //image_path should be set to /images/[name of uploaded picture] in order to show the picture uploaded, here I use the picture's rgb tunnel red produced by pic.py
+        //the rest of variables all depend on the form of output of caffe
+        var lines = output.split("\n");
+        var time = lines[6].split(" ")[1];
+        time = time.slice(0,time.length-6);
+        times.push(time);
+        lines = lines.slice(1,6);
+        var sim = new Array();
+        var label = new Array();
+        for (i in lines)
+        {
+          parts = lines[i].split(" - ");
+          sim.push(parts[0]);
+          label.push(parts[1].slice(1,parts[1].length-1).split(" ").slice(1).join(" "));
+        }
+        console.log(output);
+        //this part also requires configuration after we decide the form of output
+        sims.push(sim);
+        labels.push(label);
+        outputs.push(output);
+      });
+    }
+    res.render('caffe-demo.html',{image_path:image_path,num:sims,tag:labels,seconds:times,output:outputs});
   });
 });
 
