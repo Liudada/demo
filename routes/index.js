@@ -65,15 +65,12 @@ router.post('/upload-image', function(req, res) {
     }
     shell.exec("time "+cmds[0], {silent:true}, function(code, output) {
       console.log('processing...'+cmds[0]);
-      //the rest of variables all depend on the form of output of caffe
       run(output);
       shell.exec("time "+cmds[1], {silent:true}, function(code, output) {
         console.log('processing...'+cmds[1]);
-        //the rest of variables all depend on the form of output of caffe
         run(output);
         shell.exec("time "+cmds[2], {silent:true}, function(code, output) {
           console.log('processing...'+cmds[2]);
-          //the rest of variables all depend on the form of output of caffe
           run(output);
           res.render('caffe-demo.html',{image_path:image_path,num:sims,tag:labels,seconds:times,output:outputs});
         });
