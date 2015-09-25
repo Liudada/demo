@@ -43,8 +43,9 @@ router.post('/upload-image', function(req, res) {
     sims = new Array();
     labels = new Array();
     outputs = new Array();
-    for (cmd in cmds)
+    for (idx in cmds)
     {
+      var cmd = cmds[idx];
       shell.exec("time "+cmd, {silent:true}, function(code, output) {
         console.log('processing...'+cmd);
         //image_path should be set to /images/[name of uploaded picture] in order to show the picture uploaded, here I use the picture's rgb tunnel red produced by pic.py
